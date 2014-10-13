@@ -1,0 +1,6 @@
+Improve performance
+Refactor EVERYTHING.
+Handle calendars smaller than window
+
+
+

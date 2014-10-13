@@ -37,6 +37,8 @@ public class MainActivity extends Activity implements WeekView.MonthChangeListen
         // Get a reference for the week view in the layout.
         mWeekView = (WeekView) findViewById(R.id.weekView);
 
+        mWeekView.setDayNameLength(1);
+
         // Show a toast message about the touched event.
         mWeekView.setOnEventClickListener(this);
 
@@ -122,7 +124,7 @@ public class MainActivity extends Activity implements WeekView.MonthChangeListen
         events.add(event);
 
         startTime = Calendar.getInstance();
-        startTime.set(Calendar.HOUR_OF_DAY, 3);
+        startTime.set(Calendar.HOUR_OF_DAY, 13);
         startTime.set(Calendar.MINUTE, 30);
         startTime.set(Calendar.MONTH, newMonth-1);
         startTime.set(Calendar.YEAR, newYear);
@@ -135,7 +137,7 @@ public class MainActivity extends Activity implements WeekView.MonthChangeListen
         events.add(event);
 
         startTime = Calendar.getInstance();
-        startTime.set(Calendar.HOUR_OF_DAY, 4);
+        startTime.set(Calendar.HOUR_OF_DAY, 14);
         startTime.set(Calendar.MINUTE, 20);
         startTime.set(Calendar.MONTH, newMonth-1);
         startTime.set(Calendar.YEAR, newYear);
@@ -147,7 +149,7 @@ public class MainActivity extends Activity implements WeekView.MonthChangeListen
         events.add(event);
 
         startTime = Calendar.getInstance();
-        startTime.set(Calendar.HOUR_OF_DAY, 5);
+        startTime.set(Calendar.HOUR_OF_DAY, 15);
         startTime.set(Calendar.MINUTE, 30);
         startTime.set(Calendar.MONTH, newMonth-1);
         startTime.set(Calendar.YEAR, newYear);
@@ -159,7 +161,7 @@ public class MainActivity extends Activity implements WeekView.MonthChangeListen
         events.add(event);
 
         startTime = Calendar.getInstance();
-        startTime.set(Calendar.HOUR_OF_DAY, 5);
+        startTime.set(Calendar.HOUR_OF_DAY, 15);
         startTime.set(Calendar.MINUTE, 0);
         startTime.set(Calendar.MONTH, newMonth-1);
         startTime.set(Calendar.YEAR, newYear);
@@ -173,7 +175,7 @@ public class MainActivity extends Activity implements WeekView.MonthChangeListen
 
         startTime = Calendar.getInstance();
         startTime.set(Calendar.DAY_OF_MONTH, 15);
-        startTime.set(Calendar.HOUR_OF_DAY, 3);
+        startTime.set(Calendar.HOUR_OF_DAY, 13);
         startTime.set(Calendar.MINUTE, 0);
         startTime.set(Calendar.MONTH, newMonth-1);
         startTime.set(Calendar.YEAR, newYear);
@@ -185,7 +187,7 @@ public class MainActivity extends Activity implements WeekView.MonthChangeListen
 
         startTime = Calendar.getInstance();
         startTime.set(Calendar.DAY_OF_MONTH, 1);
-        startTime.set(Calendar.HOUR_OF_DAY, 3);
+        startTime.set(Calendar.HOUR_OF_DAY, 13);
         startTime.set(Calendar.MINUTE, 0);
         startTime.set(Calendar.MONTH, newMonth-1);
         startTime.set(Calendar.YEAR, newYear);
@@ -206,6 +208,7 @@ public class MainActivity extends Activity implements WeekView.MonthChangeListen
         event = new WeekViewEvent(5, getEventTitle(startTime), startTime, endTime);
         event.setColor(getResources().getColor(R.color.event_color_02));
         events.add(event);
+
 
         return events;
     }
