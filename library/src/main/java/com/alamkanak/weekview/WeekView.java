@@ -96,6 +96,9 @@ public class WeekView extends View {
     private boolean mIsFirstDraw = true;
     private int mDayNameLength = LENGTH_LONG;
 
+    private int mOverlappingEventGap = 1;
+    private int mEventMarginVertical = 1;
+
     private static Locale locale = Locale.getDefault();
     private int
             hourStart = 07,
@@ -226,6 +229,9 @@ public class WeekView extends View {
             mEventPadding = a.getDimensionPixelSize(R.styleable.WeekView_hourSeparatorHeight, mEventPadding);
             mHeaderColumnBackgroundColor = a.getColor(R.styleable.WeekView_headerColumnBackground, mHeaderColumnBackgroundColor);
             mDayNameLength = a.getInteger(R.styleable.WeekView_dayNameLength, mDayNameLength);
+
+            mOverlappingEventGap = a.getDimensionPixelSize(R.styleable.WeekView_overlappingEventGap, mOverlappingEventGap);
+            mEventMarginVertical = a.getDimensionPixelSize(R.styleable.WeekView_eventMarginVertical, mEventMarginVertical);
         } finally {
             a.recycle();
         }
@@ -467,18 +473,27 @@ public class WeekView extends View {
                     final float
                             header = mHeaderTextHeight + mHeaderRowPadding * 2 + mHeaderMarginBottom,
                             v1 = header + mTimeTextHeight / 2,
-                            v = mCurrentOrigin.y + v1,
+                            v = v1 + mCurrentOrigin.y,
 
                             topInHours    = calendarHours(startTime) - hourStart,
                             bottomInHours = calendarHours(endTime)   - hourStart,
 
-                            originalTop = mHourHeight * topInHours + v,
+                            originalTop = mHourHeight * topInHours + v + mEventMarginVertical,
                             top = Math.max(originalTop, v1),
-                            bottom = mHourHeight * bottomInHours + v,
+                            bottom = mHourHeight * bottomInHours + v - + mEventMarginVertical;
 
-                            originalLeft = startFromPixel + rect.left * mWidthPerDay,
+                    float originalLeft = startFromPixel + rect.left * mWidthPerDay;
+                    if (originalLeft < startFromPixel)
+                        originalLeft += mOverlappingEventGap;
+
+                    float
                             left = Math.max(originalLeft, mHeaderColumnWidth),
                             right = originalLeft + rect.width * mWidthPerDay;
+
+                    
+                    if (right < startFromPixel + mWidthPerDay)
+                        right -= mOverlappingEventGap;
+
 
 
                     // Draw the event and the event name on top of it.
@@ -1048,6 +1063,34 @@ public class WeekView extends View {
             throw new IllegalArgumentException("length parameter must be either LENGTH_LONG or LENGTH_SHORT");
         }
         this.mDayNameLength = length;
+    }
+
+
+    public int getOverlappingEventGap() {
+        return mOverlappingEventGap;
+    }
+
+    /**
+     * Set the gap between overlapping events.
+     * @param overlappingEventGap The gap between overlapping events.
+     */
+    public void setOverlappingEventGap(int overlappingEventGap) {
+        this.mOverlappingEventGap = overlappingEventGap;
+        invalidate();
+    }
+
+    public int getEventMarginVertical() {
+        return mEventMarginVertical;
+    }
+
+    /**
+     * Set the top and bottom margin of the event. The event will release this margin from the top
+     * and bottom edge. This margin is useful for differentiation consecutive events.
+     * @param eventMarginVertical The top and bottom margin.
+     */
+    public void setEventMarginVertical(int eventMarginVertical) {
+        this.mEventMarginVertical = eventMarginVertical;
+        invalidate();
     }
 
     /////////////////////////////////////////////////////////////////
